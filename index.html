@@ -88,11 +88,11 @@
 
       .nav-container {
         max-width: 1200px;
-        margin: 0 auto;
-        padding: 18px 40px;
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        align-items: center;
+        margin: auto;
+        padding: 14px 40px;
+        display: flex;
+  justify-content: space-between;
+  align-items: center;
       }
 
       .logo {
@@ -101,7 +101,6 @@
         letter-spacing: 4px;
         color: var(--accent-soft);
         text-decoration: none;
-        cursor: pointer;
       }
 
       /* Links */
@@ -115,8 +114,6 @@
 
       .nav-links a {
         position: relative;
-        display: inline-block;
-        padding: 6px 0;
         color: var(--text-dim);
         text-decoration: none;
         transition: 0.3s;
@@ -130,37 +127,50 @@
         content: "";
         position: absolute;
         left: 0;
-        bottom: -5px;
+        bottom: -4px;
         width: 0%;
-        height: 1.5px;
+        height: 1px;
         background: var(--accent-soft);
-        transition: width 0.3s ease;
+        transition: 0.3s;
       }
 
       .nav-links a:hover::after {
         width: 100%;
       }
 
-      /* CONNECT BUTTON */
-      .cta {
-        padding: 10px 22px;
-        border: 1px solid var(--accent-soft);
-        border-radius: 8px;
-        color: var(--accent-soft);
-        text-decoration: none;
-        font-family: "JetBrains Mono";
-        font-size: 0.75rem;
-        letter-spacing: 1px;
-        transition: all 0.3s ease;
-        display: inline-block;
+      /* Hide hamburger on desktop */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
       }
 
-      .cta:hover {
+      .hamburger span {
+        width: 24px;
+        height: 2px;
         background: var(--accent-soft);
-        color: var(--bg);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(83, 127, 231, 0.25);
+        transition: 0.3s ease;
       }
+
+      /* Hide mobile CTA on desktop */
+      .mobile-cta {
+        display: none;
+      }
+
+      /* CONNECT BUTTON */
+.cta {
+  padding: 8px 18px;
+  border: 1px solid var(--accent-soft);
+  border-radius: 8px;
+  color: var(--accent-soft);
+  transition: 0.3s ease;
+}
+
+.cta:hover {
+  background: var(--accent-soft);
+  color: var(--bg);
+}
 
       .container {
         max-width: 1200px;
@@ -316,13 +326,146 @@
       }
 
       @media (max-width: 900px) {
-        .item-row {
-          grid-template-columns: 1fr;
-        }
         .hero h1 {
           font-size: 4rem;
         }
       }
+      @media (max-width: 1100px) {
+        .item-row {
+          grid-template-columns: 1fr;
+        }
+
+        .bento-grid {
+          grid-template-columns: repeat(6, 1fr);
+        }
+      }
+      /* ========================= */
+      /* MOBILE RESPONSIVE SYSTEM  */
+      /* ========================= */
+
+      @media (max-width: 900px) {
+        /* Remove custom cursor on mobile */
+        * {
+          cursor: default;
+        }
+
+        #cursor {
+          display: none;
+        }
+
+        .nav-container {
+          padding: 16px 20px;
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+
+        .cta {
+          margin: 0 auto;
+          padding: 8px 18px;
+        }
+
+        .container {
+          padding: 0 20px;
+          padding-top: 140px;
+        }
+
+        .hero {
+          height: auto;
+          padding-bottom: 40px;
+        }
+
+        .hero h1 {
+          font-size: clamp(2.5rem, 12vw, 3.5rem);
+          letter-spacing: -2px;
+        }
+
+        .hero-tag {
+          font-size: 0.7rem;
+          letter-spacing: 3px;
+        }
+
+        .contact-strip {
+          flex-direction: column;
+          gap: 10px;
+          font-size: 0.75rem;
+        }
+
+        .section-title {
+          margin: 70px 0 30px;
+          font-size: 0.6rem;
+          letter-spacing: 6px;
+        }
+
+        .bento-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          padding: 25px;
+        }
+
+        .item-row {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+
+        .item-main p {
+          max-width: 100% !important;
+        }
+
+        footer div[style*="grid-template-columns"] {
+          grid-template-columns: 1fr !important;
+        }
+      }
+      /* ================= MOBILE NAV FIX ================= */
+
+@media (max-width: 900px) {
+
+  .nav-container {
+    padding: 14px 20px;
+  }
+
+  /* Show hamburger */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Hide desktop nav */
+  .nav-links {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: rgba(15,17,35,0.98);
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 40px 0;
+    transform: translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 999;
+  }
+
+  /* Active state */
+  .nav-links.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Hide desktop CTA */
+  .desktop-cta {
+    display: none;
+  }
+
+  /* Make links bigger for touch */
+  .nav-links a {
+    font-size: 0.9rem;
+  }
+}
+
     </style>
   </head>
 
@@ -333,15 +476,28 @@
       <div class="nav-container">
         <a href="#top" class="logo">DIVYANSH</a>
 
-        <div class="nav-links">
+        <!-- HAMBURGER -->
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="nav-links" id="navMenu">
           <a href="#summary">Overview</a>
           <a href="#experience">Journey</a>
           <a href="#capabilities">Expertise</a>
           <a href="#projects">Work Archive</a>
           <a href="#education">Academic</a>
+          <a href="mailto:divyanshchawla029@gmail.com" class="cta mobile-cta"
+            >Connect</a
+          >
         </div>
 
-        <a href="mailto:divyanshchawla029@gmail.com" class="cta">Connect</a>
+        <!-- Desktop CTA -->
+        <a href="mailto:divyanshchawla029@gmail.com" class="cta desktop-cta"
+          >Connect</a
+        >
       </div>
     </nav>
 
@@ -642,6 +798,21 @@
         });
       });
 
+const hamburger = document.getElementById("hamburger");
+const navMenu = document.getElementById("navMenu");
+
+hamburger.addEventListener("click", () => {
+  navMenu.classList.toggle("active");
+});
+
+/* Auto close after clicking a link */
+document.querySelectorAll("#navMenu a").forEach(link => {
+  link.addEventListener("click", () => {
+    navMenu.classList.remove("active");
+  });
+});
+
+
       // Scramble
       const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       let interval = null;
@@ -666,5 +837,3 @@
     </script>
   </body>
 </html>
-
-
